@@ -1,7 +1,12 @@
+const express = require("express");
+const morgan = require("morgan");
+const mongoose = require("mongoose");
+const Blog = require("./models/blog");
+const { MongoClient, ServerApiVersion } = require("mongodb");
+
 const {
   parsed: { URI_MDB: uri },
 } = require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require("mongodb");
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -14,9 +19,10 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
+    // Connect the client to the server
     await client.connect();
-    // Send a ping to confirm a successful connection
+
+    // Successful connection
     const collection = await client
       .db("sample_airbnb")
       .collection("listingsAndReviews");
